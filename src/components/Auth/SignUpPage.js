@@ -6,6 +6,8 @@ import condoshoplogo from "../../assets/condoshoplogo.png"
 import Button from '../Support/Button';
 import Input from '../Support/Input';
 import { ThreeDots } from 'react-loader-spinner';
+import dotenv from 'dotenv'; 
+dotenv.config();
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -15,10 +17,10 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [picture, setPicture] = useState('');
   const [password, setPassword] = useState('');
-  const API_LOCAL = process.env.LOCALHOST_URL;
-  const API_DEPLOY = process.env.REACT_APP_API_BASE_URL;
-  const API_LOCALHOST = `${API_LOCAL}/signup`
-  const API_LOCALDEPLOY = `${API_DEPLOY}/signup`
+  // const API_LOCAL = process.env.LOCALHOST_URL;
+  // const API_DEPLOY = process.env.REACT_APP_API_BASE_URL;
+  // const API_LOCALHOST = `${API_LOCAL}/signup`
+  // const API_LOCALDEPLOY = `${API_DEPLOY}/signup`
 
   function signUpUser() {
     setIsLoading(true);
@@ -30,9 +32,7 @@ export default function LoginPage() {
       torre
     };
 
-    console.log(API_LOCALHOST)
-    console.log(body)
-    const request = axios.post("http://localhost:5000/signup", body);
+    const request = axios.post(process.env.REACT_APP_API_BASE_URL+"/signup", body);
 
     request.then(response => {
       setIsLoading(false);

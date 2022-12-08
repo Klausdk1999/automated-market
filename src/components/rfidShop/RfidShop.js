@@ -24,11 +24,11 @@ export default function RfidShop({ onCreateNewRecommendation = () => 0, disabled
 //   const API_LOCALHOST = `${API_LOCAL}/values`
 //   const API_LOCALDEPLOY = `${API_DEPLOY}/values`
 
-//   const config = {
-//     headers: {
-//       Authorization: `Bearer ${token}`
-//     }
-//   };
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
   
   useEffect(() => {
     document.getElementById('name').focus();
@@ -54,7 +54,7 @@ export default function RfidShop({ onCreateNewRecommendation = () => 0, disabled
         }
         
         //const promise=axios.post(`https://projeto-autoral-guilherme.herokuapp.com/recommendations`, postTransaction, config);
-        const promise=axios.post(process.env.REACT_APP_API_BASE_URL+"/rfidtag", postRfid);
+        const promise=axios.post(process.env.REACT_APP_API_BASE_URL+"/rfidtag", postRfid, config);
 
         promise.then(resposta => {
             setEPC("");

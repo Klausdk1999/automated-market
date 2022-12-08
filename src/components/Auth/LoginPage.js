@@ -6,8 +6,10 @@ import condoshoplogo from "../../assets/condoshoplogo.png"
 import { ThreeDots } from 'react-loader-spinner';
 import Button from '../Support/Button';
 import Input from '../Support/Input';
-
+import dotenv from 'dotenv'; 
 import { UserContext } from '../../contexts/UserContext';
+
+dotenv.config();
 
 export default function LoginPage() {
   const { setUser } = useContext(UserContext);
@@ -15,17 +17,14 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const API_LOCAL = process.env.LOCALHOST_URL;
-  const API_DEPLOY = process.env.REACT_APP_API_BASE_URL;
-  const API_LOCALHOST = `${API_LOCAL}/signin`
-  const API_LOCALDEPLOY = `${API_DEPLOY}/signin`
+
 
   function login(event) {
     event.preventDefault();
 
     setIsLoading(true);
     const body = { email, password };
-    const request = axios.post("http://localhost:5000/signin", body);
+    const request = axios.post(process.env.REACT_APP_API_BASE_URL+"/signin", body);
 
     request.then(response => {
       setUser(response.data);

@@ -20,11 +20,6 @@ export default function CreateNewProduct({ onCreateNewRecommendation = () => 0, 
   const { user } = useContext(UserContext);
   const {token} = user;
 
-  const API_LOCAL = process.env.REACT_APP_LOCAL;
-  const API_DEPLOY = process.env.REACT_APP_API_BASE_URL;
-  const API_LOCALHOST = `${API_LOCAL}/products`;
-  const API_LOCALDEPLOY = `${API_DEPLOY}/products`;
-
   const config = {
     headers: {
       Authorization: `Bearer ${token}`
@@ -42,10 +37,8 @@ export default function CreateNewProduct({ onCreateNewRecommendation = () => 0, 
         price      
     }
 
-    console.log(API_LOCALHOST)
-
     //const promise=axios.post(`https://projeto-autoral-guilherme.herokuapp.com/products`, postTransaction, config);
-    const promise=axios.post(`${'http://localhost:5000/products'}`, postTransaction, config);
+    const promise=axios.post(process.env.REACT_APP_API_BASE_URL+"/products", postTransaction, config);
 
     promise.then(resposta => {
         setDescription("");
