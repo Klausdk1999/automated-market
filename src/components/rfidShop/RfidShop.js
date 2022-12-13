@@ -13,6 +13,7 @@ export default function RfidShop({ onCreateNewRecommendation = () => 0, disabled
 
   const [EPC, setEPC] = useState("");
   const [compra, setCompra] = useState([])
+  const [purchaseEPCs,setPurchaseEPCs] = useState([])
 
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -31,6 +32,34 @@ export default function RfidShop({ onCreateNewRecommendation = () => 0, disabled
     //document.getElementById('name').select();
   });
 
+  function postPurchase(event){
+
+    event.preventDefault();
+    
+    setIsLoading(true);
+
+    const postPurchase={
+        epcs: purchaseEPCs
+    }
+    
+    const promise=axios.post(process.env.REACT_APP_API_BASE_URL+"/purchase", postPurchase, config);
+
+    promise.then(resposta => {
+        alert("Compra Finalizada")
+        window.location.reload()
+        setIsLoading(false);
+
+        document.getElementById('name').focus();
+        document.getElementById('name').select();
+    });
+
+    promise.catch(error => {
+        if(error){
+        alert(error);
+        window.location.reload()
+        }
+    });
+    }
 
     function postRfid(event){
 
@@ -52,6 +81,12 @@ export default function RfidShop({ onCreateNewRecommendation = () => 0, disabled
         const promise=axios.post(process.env.REACT_APP_API_BASE_URL+"/rfidtag", postRfid, config);
 
         promise.then(resposta => {
+            let tempPurchaseEPCs=purchaseEPCs;
+
+            tempPurchaseEPCs.push(EPC)
+
+            setPurchaseEPCs(tempPurchaseEPCs)
+        
             setEPC("");
    
             let tempCompra=compra;
@@ -109,7 +144,7 @@ export default function RfidShop({ onCreateNewRecommendation = () => 0, disabled
                 
             )}
             {compra.length > 0 ?  
-                        <FinalizarButton>Finalizar Compra</FinalizarButton>
+                       <> <FinalizarButton onClick={()=>postPurchase()}>Finalizar Compra</FinalizarButton> <CancelarButton onClick={()=>{setEPC([]); setCompra([])}}>Cancelar</CancelarButton></>
                     :
                         <></>
                     }
@@ -120,6 +155,29 @@ export default function RfidShop({ onCreateNewRecommendation = () => 0, disabled
   );
 }
 
+const CancelarButton=styled.button`
+
+        width: 90%;
+        font-weight: 700;
+        min-width: 100px;
+        height: 45px;
+        margin-right: 10px;
+        margin-left: 10px;
+        text-align: center;
+        background-color: red;
+        color: #FFFFFF;
+        font-size: 21px;
+        border: none;
+        border-radius: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        a{
+            text-decoration: none;
+        }
+        cursor: pointer;
+
+`
 const FinalizarButton=styled.button`
 
         width: 90%;
