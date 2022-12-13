@@ -36,9 +36,9 @@ export default function CreateNewProduct({ onCreateNewRecommendation = () => 0, 
         image       ,
         price      
     }
-
+    console.log(postTransaction)
     //const promise=axios.post(`https://projeto-autoral-guilherme.herokuapp.com/products`, postTransaction, config);
-    const promise=axios.post(process.env.REACT_APP_API_BASE_URL+"/products", postTransaction, config);
+    const promise=axios.post(process.env.REACT_APP_API_BASE_URL+`/products`, postTransaction, config);
 
     promise.then(resposta => {
         setDescription("");
@@ -122,7 +122,6 @@ const Back=styled.div`
     align-items: center;
     justify-content: center;
     cursor: pointer;
-
 `
 
 const Container = styled.div`
@@ -148,7 +147,6 @@ const Warning =styled.div`
     margin-top: 30px;
     h3{
         color: red;
-
     }
 `
 

@@ -35,8 +35,8 @@ export default function UserRecommendation({ onCreateNewRecommendation = () => 0
         image       ,
         price      
     }
-
-    const promise=axios.post(process.env.REACT_APP_API_BASE_URL+"/recommendation", postTransaction, config);
+    console.log(postTransaction);
+    const promise=axios.post(process.env.REACT_APP_API_BASE_URL+"/recommendations", postTransaction, config);
 
     promise.then(resposta => {
         setDescription("");
