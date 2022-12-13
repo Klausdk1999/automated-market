@@ -19,15 +19,6 @@ export default function MarketPage() {
   const context = useContext(UserContext);
   const userMaster = context.user.user;
 
-  const API_LOCAL = process.env.REACT_APP_LOCAL;
-  const API_DEPLOY = process.env.REACT_APP_API_BASE_URL;
-  const API_LOCALHOST = `${API_LOCAL}/products`
-  const API_LOCALDEPLOY = `${API_DEPLOY}/products`
-
-  console.log(process.env.REACT_APP_LOCAL)
-  console.log(process.env.REACT_APP_API_BASE_URL)
-
-
   useEffect(() => {
     
     const config = {
@@ -36,9 +27,7 @@ export default function MarketPage() {
       }
     };
     
-    //const request = axios.get(`${API_LOCALDEPLOY}`, config);
-    //const request = axios.get(`${API_LOCALHOST}`, config);
-    const request = axios.get(`http://localhost:5000/products`, config);
+    const request = axios.get(process.env.REACT_APP_API_BASE_URL+`/products`, config);
 
     request.then(response => {
       setItems(response.data);

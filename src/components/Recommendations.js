@@ -11,36 +11,13 @@ export default function RecommendationsPage() {
   const { user } = useContext(UserContext);
   const [items, setItems] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
-  const API_LOCAL = process.env.REACT_APP_LOCAL;
-  const API_DEPLOY = process.env.REACT_APP_API_BASE_URL;
-  const API_LOCALHOST = `${API_LOCAL}/recommendations`
-  const API_LOCALDEPLOY = `${API_DEPLOY}/recommendations`
-
-  // let likeoutline="thumbs-up-outline";
-  // const [type, setType] = React.useState(likeoutline);
-  // const [classe, setClas] = React.useState("");
-
-  // function Heart(props){
-  //   return(
-  //       <ion-icon name={props.type} class={props.class} onClick={like}></ion-icon>
-  //   );
-  // }
-
-  // function like(){
-  //   if(type==likeoutline){
-  //       setType("thumbs-up");
-  //       setClas("like");
-  //   }else{
-  //       setType("thumbs-up-outline");
-  //       setClas("");
-  //   }   
-  // }
+  
 
   async function Favorite(id) {
         
     try {
-        //await axios.post(`https://projeto-autoral-guilherme.herokuapp.com/${id}/upvote`);
-        await axios.post(`${API_LOCAL}/${id}/upvote`);
+       
+        await axios.post(process.env.REACT_APP_API_BASE_URL+`/${id}/upvote`);
   
         setIsFavorite(!isFavorite);
         renderPosts();
@@ -52,8 +29,8 @@ export default function RecommendationsPage() {
 
   async function Deslike(id) {
       try {
-          //await axios.post(`https://projeto-autoral-guilherme.herokuapp.com/${id}/downvote`);
-          await axios.post(`${API_LOCAL}/${id}/downvote`);
+        
+          await axios.post(process.env.REACT_APP_API_BASE_URL+`/${id}/downvote`);
 
           setIsFavorite(false);
           renderPosts();
@@ -69,8 +46,7 @@ export default function RecommendationsPage() {
       }
     };
     
-    //const request = axios.get('https://projeto-autoral-guilherme.herokuapp.com/recommendations', config);
-    const request = axios.get(`${API_LOCALHOST}`, config);
+    const request = axios.get(process.env.REACT_APP_API_BASE_URL+`/recommendations`, config);
 
     request.then(response => {
       setItems(response.data);

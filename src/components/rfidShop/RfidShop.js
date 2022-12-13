@@ -19,10 +19,6 @@ export default function RfidShop({ onCreateNewRecommendation = () => 0, disabled
   const { user } = useContext(UserContext);
   const {token} = user;
 
-//   const API_LOCAL = process.env.REACT_APP_LOCAL;
-//   const API_DEPLOY = process.env.REACT_APP_API_BASE_URL;
-//   const API_LOCALHOST = `${API_LOCAL}/values`
-//   const API_LOCALDEPLOY = `${API_DEPLOY}/values`
 
   const config = {
     headers: {
@@ -53,7 +49,6 @@ export default function RfidShop({ onCreateNewRecommendation = () => 0, disabled
             codigo:EPC.toUpperCase()
         }
         
-        //const promise=axios.post(`https://projeto-autoral-guilherme.herokuapp.com/recommendations`, postTransaction, config);
         const promise=axios.post(process.env.REACT_APP_API_BASE_URL+"/rfidtag", postRfid, config);
 
         promise.then(resposta => {
