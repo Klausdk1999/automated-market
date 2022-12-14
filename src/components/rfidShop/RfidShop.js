@@ -19,15 +19,15 @@ export default function RfidShop({ onCreateNewRecommendation = () => 0, disabled
 
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
-  const {token} = user;
+//   const { user } = useContext(UserContext);
+//   const {token} = user;
 
 
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  };
+//   const config = {
+//     headers: {
+//       Authorization: `Bearer ${token}`
+//     }
+//   };
   
   useEffect(() => {
     document.getElementById('name').focus();
@@ -42,7 +42,7 @@ export default function RfidShop({ onCreateNewRecommendation = () => 0, disabled
         epcs: purchaseEPCs
     }
     
-    const promise=axios.post(process.env.REACT_APP_API_BASE_URL+"/purchase", postPurchase, config);
+    const promise=axios.post(process.env.REACT_APP_API_BASE_URL+"/purchase", postPurchase);
 
     promise.then(resposta => {
         setPurchaseEPCs([]);
@@ -75,7 +75,7 @@ export default function RfidShop({ onCreateNewRecommendation = () => 0, disabled
             codigo:EPC.toUpperCase()
         }
         
-        const promise=axios.post(process.env.REACT_APP_API_BASE_URL+"/rfidtag", postRfid, config);
+        const promise=axios.post(process.env.REACT_APP_API_BASE_URL+"/rfidtag", postRfid);
 
         promise.then(resposta => {
             let tempPurchaseEPCs=purchaseEPCs;
