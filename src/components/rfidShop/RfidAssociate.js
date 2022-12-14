@@ -34,10 +34,10 @@ export default function RfidAssociate({ onCreateNewRecommendation = () => 0, dis
         event.preventDefault();
         setIsLoading(true);
         const postRfid={
-          code,
-          product_id
+          product_id: Number(product_id),
+          code
         }
-
+        console.log(postRfid);
         const promise=axios.post(process.env.REACT_APP_API_BASE_URL+"/associate", postRfid, config);
 
         promise.then(resposta => {

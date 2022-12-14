@@ -14,6 +14,7 @@ export default function RfidShop({ onCreateNewRecommendation = () => 0, disabled
   const [EPC, setEPC] = useState("");
   const [compra, setCompra] = useState([])
   const [purchaseEPCs,setPurchaseEPCs] = useState([])
+  const [pay,setPay] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ export default function RfidShop({ onCreateNewRecommendation = () => 0, disabled
     event.preventDefault();
     
     setIsLoading(true);
-
+    setPay(true)
     const postPurchase={
         epcs: purchaseEPCs
     }
@@ -47,6 +48,7 @@ export default function RfidShop({ onCreateNewRecommendation = () => 0, disabled
     promise.then(resposta => {
         alert("Compra Finalizada")
         window.location.reload()
+        setPay(false);
         setIsLoading(false);
 
         document.getElementById('name').focus();
@@ -118,6 +120,11 @@ export default function RfidShop({ onCreateNewRecommendation = () => 0, disabled
 
   return (
     <Container>
+        {pay ? 
+        <CancelarButton onClick={()=>setPay(false)}></CancelarButton>
+        :
+        <></>
+        }
             <GenericTopBar></GenericTopBar>
 
             {isLoading ? (   
