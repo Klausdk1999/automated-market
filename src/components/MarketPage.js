@@ -46,16 +46,11 @@ export default function MarketPage() {
   const buyedItems = cart.map(item => item.name).reduce((prev, curr) => prev +  curr + ", ", "");
   
   function BuyItems(){
-    let t1=encodeURIComponent("Olá, os seguintes itens foram retirados:\n");
-    let t2=encodeURIComponent(`Itens retirados: ${buyedItems}\n`)
-    let finalValue=encodeURIComponent(`\nValor total dos itens retirados: R$ ${sumPrices.toFixed(2)} `);
-
       function finalizarPedido(){
-          let nome=userMaster.name;
-          let endereco=userMaster.city;
-          let t5=encodeURIComponent("\nCompra realizada no nome de: " + nome);
-          let t6=encodeURIComponent("\nEndereço: " + endereco);
-          window.open("https://wa.me/+5547996993721?text="+t1+t2+finalValue+t5+t6);
+        let nome=userMaster.name;
+          
+        let t5=encodeURIComponent("\nOla, me chamo " + nome+ " minha duvida é:"); 
+        window.open("https://wa.me/+5547996993721?text="+t5);
       }
       finalizarPedido()
   }
@@ -70,16 +65,22 @@ export default function MarketPage() {
 
   if(userMaster.name==="master"){
     return (
+      
+
+    
       <CartContext.Provider value={{ cart, addToCart }}>
       <Margin>
       <TopBar />
         <Container>
           <InsertButton onClick={()=>navigate("/createproduct")} >Inserir mais produtos</InsertButton  >
           <InsertButton onClick={()=>navigate("/associate")} >Cadastrar Etiquetas</InsertButton  >
+          <ScrollY>
           {buildItems()}
+          </ScrollY>
         </Container>
       </Margin>
     </CartContext.Provider>
+    
     )
   }
   else{
@@ -88,9 +89,9 @@ export default function MarketPage() {
         <Margin>
         <TopBar />
           <Container>
-            <h1>Adquira seus produtos abaixo!</h1>
-            <button onClick={BuyItems} >Finalizar o pedido</button>
             
+            <button onClick={BuyItems}> Suporte via WhatsApp</button>
+            <button > Veja os produtos disponíveis abaixo!</button>
             {buildItems()}
           </Container>
         </Margin>
@@ -100,6 +101,13 @@ export default function MarketPage() {
 
   
 }
+const ScrollY = styled.div`
+  display: flex;
+  flex-direction: column;
+  max-height: 100px;
+  overflow-y: scroll;
+`;
+
 const Margin = styled.div`
   margin-top: 100px;
   background-color: #38b6ff;

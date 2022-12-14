@@ -121,7 +121,7 @@ export default function RfidAssociate({ onCreateNewRecommendation = () => 0, dis
 }
 const ItensRender=styled.div`
   overflow-y: scroll;
-    max-height: 320px;
+  max-height: 320px;
 ` 
 
 const Recommendation = styled.div`

@@ -14,8 +14,8 @@ export default function RecommendationTopBar() {
       </Logo> */}
       <Column onClick={()=>navigate("/market")}>
       <ion-icon  name="cart-sharp"></ion-icon>
-        <h2> Adquirir <br>
-        </br> produtos</h2>
+        <h2> Lista de <br>
+        </br> Produtos</h2>
       </Column>
       <User />
       <Logout onClick={()=>navigate("/")} >
