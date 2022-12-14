@@ -7,6 +7,7 @@ import axios from "axios";
 import GenericTopBar from "../Tops/GenericTopBar";
 import { ThreeDots } from 'react-loader-spinner';
 import dotenv from 'dotenv'; 
+import qrcode from '../../assets/qrcode.png'
 dotenv.config();
 
 export default function RfidShop({ onCreateNewRecommendation = () => 0, disabled = false }) {
@@ -33,10 +34,8 @@ export default function RfidShop({ onCreateNewRecommendation = () => 0, disabled
     //document.getElementById('name').select();
   });
 
-  function postPurchase(event){
+  function postPurchase(){
 
-    event.preventDefault();
-    
     setIsLoading(true);
     setPay(true)
     const postPurchase={
@@ -46,13 +45,9 @@ export default function RfidShop({ onCreateNewRecommendation = () => 0, disabled
     const promise=axios.post(process.env.REACT_APP_API_BASE_URL+"/purchase", postPurchase, config);
 
     promise.then(resposta => {
-        alert("Compra Finalizada")
-        window.location.reload()
-        setPay(false);
+        setPurchaseEPCs([]);
+        
         setIsLoading(false);
-
-        document.getElementById('name').focus();
-        document.getElementById('name').select();
     });
 
     promise.catch(error => {
@@ -113,7 +108,9 @@ export default function RfidShop({ onCreateNewRecommendation = () => 0, disabled
             }
         });
     }
+    
     let total=0;
+
     for(let i = 0; i < compra.length; i++){
         total += compra[i].price;
     }
@@ -121,7 +118,15 @@ export default function RfidShop({ onCreateNewRecommendation = () => 0, disabled
   return (
     <Container>
         {pay ? 
-        <CancelarButton onClick={()=>setPay(false)}></CancelarButton>
+        <BackPay>
+            <GenericTopBar></GenericTopBar>
+            <WhiteBox>
+                <h1>Realizar Pagamento</h1>
+                <h2>Total: R$ {total}</h2>
+                <img src={qrcode} alt="qrcode" />
+                <CancelarButton onClick={()=>setPay(false)}>Pago</CancelarButton>
+            </WhiteBox>   
+        </BackPay>
         :
         <></>
         }
@@ -161,6 +166,46 @@ export default function RfidShop({ onCreateNewRecommendation = () => 0, disabled
     </Container>
   );
 }
+
+const WhiteBox = styled.div`
+    width: 70%;
+    height: 70%;
+    opacity:1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: lightblue;
+    justify-content: space-evenly;
+    border-radius: 10px;
+    z-index: 4;
+    h1{
+        font-size:36px;
+    }
+    h2{
+        font-size:28px;
+    }
+    button{
+        max-width:30%;
+        background-color:#38b6ff;
+    }
+    img{
+        width: 30%;
+        opacity:1;
+    }
+`
+const BackPay = styled.div`
+  width: 100%;
+  height: 100%;
+  position:fixed;
+  display: flex;
+  flex-direction: column;
+  z-index: 3;
+  background-color: whitesmoke;
+  top:0;
+  left:0;
+  align-items: center;
+  justify-content: center;
+`;
 
 const CancelarButton=styled.button`
 

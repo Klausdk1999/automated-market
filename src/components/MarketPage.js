@@ -75,7 +75,7 @@ export default function MarketPage() {
       <TopBar />
         <Container>
           <InsertButton onClick={()=>navigate("/createproduct")} >Inserir mais produtos</InsertButton  >
-          
+          <InsertButton onClick={()=>navigate("/associate")} >Cadastrar Etiquetas</InsertButton  >
           {buildItems()}
         </Container>
       </Margin>

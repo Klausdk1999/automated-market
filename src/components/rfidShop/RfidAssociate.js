@@ -7,14 +7,12 @@ import axios from "axios";
 import GenericTopBar from "../Tops/GenericTopBar";
 import { ThreeDots } from 'react-loader-spinner';
 import dotenv from 'dotenv'; 
-import Item from '../Item';
 
 dotenv.config();
 
 export default function RfidAssociate({ onCreateNewRecommendation = () => 0, disabled = false }) {
   const [code, setcode] = useState("");
   const [product_id, setproduct_id] = useState("");
-  const [rfidReturn, setRfidReturn] = useState([])
 
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -41,11 +39,10 @@ export default function RfidAssociate({ onCreateNewRecommendation = () => 0, dis
         const promise=axios.post(process.env.REACT_APP_API_BASE_URL+"/associate", postRfid, config);
 
         promise.then(resposta => {
-            setcode("");
-            setRfidReturn(resposta.data)
-            // console.log(resposta.data)
-            navigate("/market");
-
+          alert("Associado")
+          setcode("");
+          setproduct_id("");
+          setIsLoading(false);
         });
 
         promise.catch(error => {
@@ -55,18 +52,8 @@ export default function RfidAssociate({ onCreateNewRecommendation = () => 0, dis
             }
         });
 
-        return setRfidReturn;
+        
     }
-
-    function renderRfid(){
-        let retorno = rfidReturn
-
-        return retorno;
-    }
-
-    let retorno2 = renderRfid()
-
-    console.log(retorno2);
 
     useEffect(() => {
     
@@ -107,13 +94,7 @@ export default function RfidAssociate({ onCreateNewRecommendation = () => 0, dis
                     <button id="submit">Ler tag</button>
                 </Form>
             )}
-            <Rfid>
-                {retorno2.map((item, index)=>{
-                    <h1> {item.name} </h1>
-                })}
-                {/* {rfidReturn.name} */}
-            </Rfid>
-
+           
             <ItensRender>
                 {items.map((item, index)=>(
                                     <Recommendation>
@@ -133,7 +114,7 @@ export default function RfidAssociate({ onCreateNewRecommendation = () => 0, dis
                 </h3>
             </Warning>
             <Back onClick={()=>navigate("/market")}>
-                Desistiu de postar? Clique aqui para voltar
+                Clique aqui para voltar
             </Back>
     </Container>
   );
